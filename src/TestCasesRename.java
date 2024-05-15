@@ -25,8 +25,8 @@ public class TestCasesRename {
     }
 
     private static void generate() {
-        generateNewPayload();
-//        generateNewFeatureFile();
+//        generateNewPayload();
+        generateNewFeatureFile();
     }
 
     public static void enterData(){
@@ -44,12 +44,12 @@ public class TestCasesRename {
     public static void initData(){
         String projectPath = String.valueOf(Paths.get("").toAbsolutePath());
         String[] dirSplit = projectPath.split("\\\\");
-        testAutomationPath = projectPath.replace(dirSplit[dirSplit.length-1],"test-automation");
-        featureFilePath = testAutomationPath+"\\resources\\featureFiles\\";
+        testAutomationPath = projectPath.replace(dirSplit[dirSplit.length-1],"");
+        featureFilePath = testAutomationPath+"resources\\featureFiles\\"+featureFileName;
         if(featureFileName.contains("DEV")) env = "DEV";
         else if(featureFileName.contains("SIT")) env = "SIT";
         else if(featureFileName.contains("UAT")) env = "UAT";
-        payloadFiles = testAutomationPath+"\\src\\test\\resources\\Payload\\"+env+"\\";
+        payloadFiles = testAutomationPath+"src\\test\\resources\\Payload\\"+env+"\\";
         newTestCasePrefix = "DIHP-T";
     }
     public static void printData(){
@@ -78,16 +78,21 @@ public class TestCasesRename {
             }
         }
     }
-    public static void generateNewFeatureFile(String newTcName){
-        String destinationFilePath = featureFilePath.replace(featureFileName, featureFileName+"-new.feature");
+    public static void generateNewFeatureFile(){
+        String destinationFilePath = featureFilePath.replace(featureFileName, featureFileName.replace(".feature","-new.feature"));
         try (BufferedReader reader = new BufferedReader(new FileReader(featureFilePath));
              BufferedWriter writer = new BufferedWriter(new FileWriter(destinationFilePath))) {
             String line;
+            int k=primaryTestCaseNumber;
             while ((line = reader.readLine()) != null) {
-                if (line.contains(TCline)) line = TCline+newTcName;
-                System.out.println(line);
-//                writer.write(line);
-//                writer.newLine();
+                if (line.contains(TCline)) {
+                    String newTcName = newTestCasePrefix+k;
+                    line = "  "+TCline+newTcName;
+                    k++;
+                }
+//                System.out.println(line);
+                writer.write(line);
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
