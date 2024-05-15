@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -8,10 +9,10 @@ import java.util.List;
 public class ScenariosToCSV {
     private static String[] headers = new String[]
             {"Key", "Name", "Status", "Precondition", "Objective", "Folder",
-            "Priority", "Component", "Labels", "Estimated Time", "Coverage (Issues)",
-            "Coverage (Pages)", "Test Script (Step-by-Step) - Step",
-            "Test Script (Step-by-Step) - Test Data", "Test Script (Step-by-Step) - Expected Result",
-            "Test Script (Plain Text)", "Test Script (BDD)"};
+                    "Priority", "Component", "Labels", "Estimated Time", "Coverage (Issues)",
+                    "Coverage (Pages)", "Test Script (Step-by-Step) - Step",
+                    "Test Script (Step-by-Step) - Test Data", "Test Script (Step-by-Step) - Expected Result",
+                    "Test Script (Plain Text)", "Test Script (BDD)"};
     public static void main(String[] args) {
 
         List<String> paths = findFeatureFiles();
@@ -20,32 +21,37 @@ public class ScenariosToCSV {
         }
     }
     private static void printCSV(List<String> scenarios, String outFilePath, List<String> headers){
+        String[] p = outFilePath.split("\\\\");
+        String csvName  = p[p.length-1];
+        outFilePath = "csvFiles\\" + csvName;
         String env ="";
+        String splitter = ",";
         if(outFilePath.contains("DEV")) env="DEV";
         else if(outFilePath.contains("SIT")) env="SIT";
         else if(outFilePath.contains("UAT")) env="UAT";
         try (PrintWriter writer = new PrintWriter(new FileWriter(outFilePath))){
             for(String h : headers){
-                writer.print(h+";");
+                writer.print(h+splitter);
             }
             writer.print("\n");
             for (String s : scenarios){
-                writer.print("TC-x"+";");
-                writer.print(s+";");
-                writer.print(""+";");
-                writer.print(""+";");
-                writer.print(outFilePath.replace(".csv","")+"/"+env+";");
-                writer.print("Normal"+";");
-                writer.print(""+";");
-                writer.print(env+";");
-                writer.print(""+";");
-                writer.print(""+";");
-                writer.print(""+";");
-                writer.print(""+";");
-                writer.print(""+";");
-                writer.print(""+";");
-                writer.print(""+";");
-                writer.print(""+";");
+                writer.print("TC-x"+splitter);
+                writer.print(s+splitter);
+                writer.print("DRAFT"+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
+                writer.print(outFilePath.replace(".csv","")+"/"+env+splitter);
+                writer.print("Normal"+splitter);
+                writer.print(""+splitter);
+                writer.print(env+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
+                writer.print(""+splitter);
                 writer.print("\n");
             }
         } catch (IOException e) {
@@ -58,7 +64,6 @@ public class ScenariosToCSV {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.contains("Scenario: ")) {
-                    System.out.println(line);
                     line = line.replaceAll("\t","");
                     scenarios.add(line);
                 }
@@ -70,10 +75,10 @@ public class ScenariosToCSV {
     }
     private static List<String> findFeatureFiles(){
         List<String> paths = new ArrayList<>();
-        // Ścieżka do katalogu, w którym zaczynamy wyszukiwanie
-        String startDir = ""; // zmień tę ścieżkę na odpowiednią
-
-        // Przechodzenie po drzewie katalogów i wyszukiwanie plików z rozszerzeniem .feature
+        String projectPath = String.valueOf(Paths.get("").toAbsolutePath());
+        String[] dirSplit = projectPath.split("\\\\");
+        String testAutomationPath = projectPath.replace(dirSplit[dirSplit.length-1],"");
+        String startDir = testAutomationPath+"resources\\featureFiles\\";
         try {
             Files.walkFileTree(Paths.get(startDir), EnumSet.noneOf(FileVisitOption.class), Integer.MAX_VALUE, new FileVisitor<Path>() {
                 @Override
