@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ScenariosToCSV.iml" filepath="$PROJECT_DIR$/ScenariosToCSV.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestAutomationUtils.iml" filepath="$PROJECT_DIR$/TestAutomationUtils.iml" />
     </modules>
   </component>
 </project>

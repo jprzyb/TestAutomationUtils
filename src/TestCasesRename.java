@@ -14,12 +14,19 @@ public class TestCasesRename {
     public static String featureFilePath;
     public static String payloadFiles;
     public static String oldPayloadTCprefix;
+    public static String newTestCasePrefix;
     public static String TCline = "@TestCaseKey=";
 
     public static void main(String[] args) {
         enterData();
         initData();
         printData();
+        generate();
+    }
+
+    private static void generate() {
+        generateNewPayload();
+//        generateNewFeatureFile();
     }
 
     public static void enterData(){
@@ -43,6 +50,7 @@ public class TestCasesRename {
         else if(featureFileName.contains("SIT")) env = "SIT";
         else if(featureFileName.contains("UAT")) env = "UAT";
         payloadFiles = testAutomationPath+"\\src\\test\\resources\\Payload\\"+env+"\\";
+        newTestCasePrefix = "DIHP-T";
     }
     public static void printData(){
         System.out.println("env: " + env);
@@ -53,26 +61,33 @@ public class TestCasesRename {
         System.out.println("featureFilePath: " + featureFilePath);
         System.out.println("payloadFiles: " + payloadFiles);
         System.out.println("oldPayloadTCprefix: " + oldPayloadTCprefix);
+        System.out.println("newTestCasePrefix: " + newTestCasePrefix);
     }
 
-    public static void generateNewPayload(String payloadPath, String TCname, String newTCname){
-        Path sourcePath = Paths.get(payloadPath + TCname);
-        Path destinationPath = Paths.get(payloadPath+newTCname);
-        try {
-            Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void generateNewPayload(){
+        int k=1;
+        for(int i=primaryTestCaseNumber;i<primaryTestCaseNumber+tcCount;i++){
+            Path sourcePath = Paths.get(payloadFiles + oldPayloadTCprefix + k +".json");
+            Path destinationPath = Paths.get(payloadFiles+newTestCasePrefix+i+".json");
+            System.out.println(sourcePath + " > " + destinationPath);
+            k++;
+            try {
+                Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-    public static void generateNewFeatureFile(){
+    public static void generateNewFeatureFile(String newTcName){
         String destinationFilePath = featureFilePath.replace(featureFileName, featureFileName+"-new.feature");
         try (BufferedReader reader = new BufferedReader(new FileReader(featureFilePath));
-
              BufferedWriter writer = new BufferedWriter(new FileWriter(destinationFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                writer.write(line);
-                writer.newLine();
+                if (line.contains(TCline)) line = TCline+newTcName;
+                System.out.println(line);
+//                writer.write(line);
+//                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
