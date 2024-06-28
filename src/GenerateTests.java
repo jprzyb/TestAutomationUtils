@@ -1,7 +1,17 @@
-import java.io.*;
+/**
+ * @author Jakub Przybylski
+ * @license Proprietary
+ * @date 28.06.2024
+ * @description This code is protected by copyright.
+ *              It may not be used, copied, or modified without explicit permission from the author.
+ *              Contact: jakubp02.10@gmail.com
+ */
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;

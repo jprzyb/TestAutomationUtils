@@ -1,3 +1,11 @@
+/**
+ * @author Jakub Przybylski
+ * @license Proprietary
+ * @date 28.06.2024
+ * @description This code is protected by copyright.
+ *              It may not be used, copied, or modified without explicit permission from the author.
+ *              Contact: jakubp02.10@gmail.com
+ */
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
