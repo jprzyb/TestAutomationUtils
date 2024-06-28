@@ -65,6 +65,7 @@ public class ScenariosToCSV {
             while ((line = reader.readLine()) != null) {
                 if (line.contains("Scenario: ")) {
                     line = line.replaceAll("\t","");
+                    line = line.replaceAll("Scenario: ","");
                     scenarios.add(line);
                 }
             }
