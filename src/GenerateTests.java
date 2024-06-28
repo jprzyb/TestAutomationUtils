@@ -62,35 +62,35 @@ public class GenerateTests {
     }
     private static String getScenarioEmpty(String line, String apiName, String tcKey){
         String scenario =
-                "\t@ApiName="+apiName+
+                "\t@apiName="+apiName+
                         "\n\t@TestCaseKey="+tcKey+
                         "\n\t@dev"+
                         "\n\t@pass"+
                         "\n\tScenario: Field " + line.split(":")[0].trim() + " is empty." +
-                        "\n\t\tGiven: For given payload"+
-                        "\n\t\tThen: records fetched with 200\n\n";
+                        "\n\t\tGiven For given payload"+
+                        "\n\t\tThen records fetched with 200\n\n";
         return scenario;
     }
     private static String getScenarioXXX(String line, String apiName, String tcKey){
         String scenario =
-                "\t@ApiName="+apiName+
+                "\t@apiName="+apiName+
                         "\n\t@TestCaseKey="+tcKey+
                         "\n\t@dev"+
                         "\n\t@pass"+
                         "\n\tScenario: Field " + line.split(":")[0].trim() + " is \"xxx\"." +
-                        "\n\t\tGiven: For given payload"+
-                        "\n\t\tThen: records fetched with 200\n\n";
+                        "\n\t\tGiven For given payload"+
+                        "\n\t\tThen records fetched with 200\n\n";
         return scenario;
     }
     private static String getScenarioxxx(String line, String apiName, String tcKey){
         String scenario =
-                "\t@ApiName="+apiName+
+                "\t@apiName="+apiName+
                         "\n\t@TestCaseKey="+tcKey+
                         "\n\t@dev"+
                         "\n\t@pass"+
                         "\n\tScenario: Field " + line.split(":")[0].trim()+ " is xxx." +
-                        "\n\t\tGiven: For given payload"+
-                        "\n\t\tThen: records fetched with 200\n\n";
+                        "\n\t\tGiven For given payload"+
+                        "\n\t\tThen records fetched with 200\n\n";
         return scenario;
     }
     private static void generatePayloadEmpty(String tcKey, List<String> payload, String line){
